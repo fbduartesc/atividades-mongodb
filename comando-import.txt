@@ -1,0 +1,1 @@
+mongoimport -c megasena --type csv --headerline --file megasena.csv
