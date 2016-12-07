@@ -137,3 +137,28 @@ db.ganhadores.update({"Nome":"Mula sem cabeça"},
 
 ### Remover registros
 
+```js
+db.<collection>.remove({<criterioBusca>:<valor>});
+```
+
+Removendo todos os registros com CPF 33333333333:
+
+```js
+db.ganhadores.count();
+db.ganhadores.find({"CPF":33333333333}).count();
+db.ganhadores.remove({"CPF":33333333333});
+db.ganhadores.count();
+```
+Para remover todos os registros de uma collection, é só passar uma condição vazia.
+
+```js
+db.ganhadores.count();
+db.ganhadores.remove({});
+db.ganhadores.count();
+```
+
+### Remover collections
+
+```js
+db.<collection>.drop();
+```
