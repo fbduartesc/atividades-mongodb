@@ -41,4 +41,5 @@ db.<collection>.find({<campo1>:<valor>},{<campoParaExibir>:<exibeOuNaoExibe>});
 db.megasena.find({"Ganhadores_Sena":5},{"Concurso":1});
 db.megasena.find({"Ganhadores_Sena":5},{"Concurso":true,
 					"_id":false});
+db.megasena.find({"Ganhadores_Sena":5}, {"Concurso":1, "_id":0});
 ```
