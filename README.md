@@ -90,5 +90,50 @@ db.ganhadores.find().pretty();
 
 ### Atualizando registros
 
+```js
+db.<collection>.update(
+{<criterioBusca>:<valor>},
+{<campoAtualizar>:<novoValor>}
+);
 
+db.ganhadores.update(
+{"_id":ObjectId("5846edb36cad189cb335c440")},
+{"Nome": "Novo nome"});
+
+db.<collection>.update(
+{<criterioBusca>:<valor>},
+{$set: {<campoAtualizar>:<novoValor>}});
+
+db.ganhadores.update(
+{"_id":ObjectId("5846edb36cad189cb335c440")},
+{$set:{"NOme":"Nome alterado"}});
+```
+
+Por padrão altera apenas o primeiro registro encontrado. Para alterar todos os registros usa o multi.
+
+```js
+db.ganhadores.update({}, {$set:{"CPF":55555555555}});
+```
+
+Alterando multi para true, todas as linhas são alteradas.
+
+```js
+db.ganhadores.update({},
+{$set:{"CPF":55555555555}},{multi:true});
+```
+
+### Upsert
+Busca registro, se existir atualizar, senão cadastra.
+
+```js
+db.ganhadores.update({"Nome":"Mula sem cabeça"},
+{$set:{"CPF":33333333333}},
+{multi:0,upsert:0});
+
+db.ganhadores.update({"Nome":"Mula sem cabeça"},
+{$set:{"CPF":33333333333}},
+{multi:0,upsert:1});
+```
+
+### Remover registros
 
