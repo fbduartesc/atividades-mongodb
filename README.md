@@ -161,4 +161,8 @@ db.ganhadores.count();
 
 ```js
 db.<collection>.drop();
+db.collectionNova.insert({"coluna":"so"});
+db.collectionNova.count();
+db.collectionNova.drop();
 ```
+
