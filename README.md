@@ -165,4 +165,101 @@ db.collectionNova.insert({"coluna":"so"});
 db.collectionNova.count();
 db.collectionNova.drop();
 ```
+#### Alterando coluna de uma collection
+
+```js
+db.<collection>.update({},
+{$unset:{<campo>: 1}},
+false,true);
+```
+
+O parâmetro false avisa que não é um upsert e o parâmetro true é a confirmação para remover todos os documentos.
+
+```js
+db.messages.update({},
+{$unset:{titulo:1}},
+false,true);
+```
+
+Alterando apenas o nome da coluna
+
+```js
+db.<collection>.update({},
+{$rename: {"<nomeColunaAtual>" : "<nomeColunaNova>"}},
+false,true);
+
+db.messages.update({},
+{$rename: {"mailboxx": "mailbox"}},
+falsae,true);
+```
+
+### Melhorando as buscas
+
+Para filtrar "Data de sorteio" apena de 2009, utiliza-se expressões regulares.
+
+```js
+db.<collection>.find({<campo>:/<textoBuscar>});
+db.<collection>.find({<campo>:{$regex:<textoBuscar>}});
+```
+
+```js
+db.megasena.find({"Data Sorteio":/2009/}).count();
+db.megasena.find({"Data Sorteio":{$regex:'2009'}}).count();
+```
+
+Contar os ganhadores que tem joe em seu nome.
+
+```js
+db.ganhadores.find({"Nome":/joe/}).count();
+0
+db.ganhadores.find({"Nome":/Joe/}).count();
+1
+```
+
+Ignorando letras maiúsculas e minúsculas:
+
+Sintaxe
+```js
+db.<collection>.find({<campo>:/<texto>/i});
+db.<collection>.find({<campo>:{$regex:<texto>,$options:'i'}});
+```
+
+Exemplo:
+
+```js
+db.ganhadores.find({"Nome":/joe/i}).count();
+db.ganhadores.find({"Nome":{$regex:'joe', $options:'i'}}).count();
+```
+
+Operadores de busca
+
+````
+$gt maior que (greater-than)
+
+$gte igual ou maior que (greater-than or equal to)
+
+$lt menor que (less-than)
+
+$lte igual ou menor que (less-than or equal to)
+
+$ne não igual (not equal)
+
+$in existe em uma lista
+
+$nin não existe em uma lista
+
+$all existe em todos elementos
+
+$not traz o oposto da condição
+
+$mod calcula o módulo
+
+$exists verifica se o campo existe
+
+$elemMatch compara elementos de array
+
+$size compara tamanho de array
+```
+
+### Capped Collection
 
