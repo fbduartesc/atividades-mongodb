@@ -289,3 +289,58 @@ Se consultar, percebemos que apenas os dois últimos estão armazenados.
 db.cacheDeDoisDocumentos.count();
 ```
 
+### Schema design
+
+´´´js
+db.seriados.insert({
+"_id":4,
+"nome": "Chaves",
+"personagens":[
+"Seu Barriga",
+"Quico",
+"Chaves",
+"Chiquinha",
+"Nhonho",
+"Dona Florinda"]});
+```
+
+Cadastrando livro
+
+```js
+db.livros.insert({
+_id:"A menina do Vale",
+autor:"Bel Pesce",
+tags: ["empreendedorismo", "inspiração","virar a mesa"]});
+```
+
+Cadastrando comentário
+
+```js
+db.comentarios.insert({
+livro_id: "A menina do Vale",
+autor: "Amit Garg",
+texto: "A Menina do Vale tem o poder de energizar qualquer pessoa. É um livro sobre ação e mostra que qualquer pessoa nesse mundo pode realizar os seus sonhos."
+});
+db.comentarios.insert({
+livro_id: "A menina do Vale",
+autor:"Eduardo Lyra",
+texto:"Pare tudo e leia A Menina do Vale agora mesmo. Te garanto que você vai aprender demais com essa leitura e vai se surpreender com o quanto é capaz de fazer."});
+```
+
+Essa abordagem para o Mongo não tem vantagem, pois separa as informações em locais distintos. Neste caso o ideal é embutir as informações de comentários dentro de cada livro.
+
+```js
+db.livros.insert({
+_id:"A menina do Vale",
+autor:"Bel Pesce",
+tags: ["empreendedorismo", "inspiração","virar a mesa"],
+comentarios:[
+autor: "Amit Garg",
+texto: "A Menina do Vale tem o poder de energizar qualquer pessoa. É um livro sobre ação e mostra que qualquer pessoa nesse mundo pode realizar os seus sonhos.",
+autor:"Eduardo Lyra",
+texto:"Pare tudo e leia A Menina do Vale agora mesmo. Te garanto que você vai aprender demais com essa leitura e vai se surpreender com o quanto é capaz de fazer."
+]
+});
+
+### Relacionando muitas collection para muitas
+
