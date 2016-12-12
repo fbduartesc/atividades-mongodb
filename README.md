@@ -263,3 +263,29 @@ $size compara tamanho de array
 
 ### Capped Collection
 
+As coleções tampadas são collections com tamanhos predefinidos e com seu conteúdo rotativo.
+
+```js
+db.createCollection("<collection>", {capped: true, size: <tamanho em bytes>, max: <numero-documentos>});
+```
+
+O tamanho mínimo deve ser 4096 e optar por limitar o número de documentos com max.
+
+Exemplo:
+
+```js
+db.createCollection("cacheDeDoisDocumentos", {capped:true, size:4096, max:2});
+
+db.cacheDeDoisDocumentos.insert({"nome":"teste 1"});
+db.cacheDeDoisDocumentos.insert({"nome":"teste 2"});
+db.cacheDeDoisDocumentos.insert({"nome":"teste 3"});
+db.cacheDeDoisDocumentos.insert({"nome":"teste 4"});
+
+```
+
+Se consultar, percebemos que apenas os dois últimos estão armazenados.
+
+```js
+db.cacheDeDoisDocumentos.count();
+```
+
